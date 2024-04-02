@@ -14,10 +14,11 @@ class Membre implements Icrud
     private $sexe;
     private $situationMatrimoniale;
     private $statut;
+    private $cnx;
 
 
     // la méthode magique __construct
-    public function __construct($matricule, $nom, $prenom, $trancheAge, $sexe, $situationMatrimoniale, $statut)
+    public function __construct($matricule, $nom, $prenom, $trancheAge, $sexe, $situationMatrimoniale, $statut, $cnx)
     {
         $this->matricule = $matricule;
         $this->nom = $nom;
@@ -26,6 +27,7 @@ class Membre implements Icrud
         $this->sexe = $sexe;
         $this->situationMatrimoniale = $situationMatrimoniale;
         $this->statut = $statut;
+        $this->cnx = $cnx;
     }
 
     // les getters et les setters
@@ -99,7 +101,15 @@ class Membre implements Icrud
     }
     public function read()
     {
-        
+     try {
+        $sql="SELECT * FROM membre";
+        $req=$this->cnx->prepare($sql);
+        $req->execute();
+        $membres = $req->fetchAll(PDO::FETCH_ASSOC);
+        return $membres;
+     } catch (PDOException $erreur) {
+        die("Erreur !: " . $erreur->getMessage() . "<br/>");
+     }   
     }
     public function update()
     {
