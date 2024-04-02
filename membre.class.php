@@ -1,9 +1,10 @@
 <?php
-
+require_once("crud.interface.php");
 
 
 // classe Membre
-class Membres
+class Membre implements Icrud
+     
 {
     // les propriétés
     private $matricule;
@@ -90,5 +91,22 @@ class Membres
     {
         $this->statut = $n_statut;
     }
-
+ 
+    // Implementations des methodes de l'interface
+    public function create()
+    {
+        
+    }
+    public function read()
+    {
+        
+    }
+    public function update()
+    {
+        
+    }
+    public function delete()
+    {
+        
+    }
 }
