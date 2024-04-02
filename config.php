@@ -1,5 +1,5 @@
 <?php
-
+require_once("membre.class.php");
 define('DSN', 'mysql:host=localhost;dbname=commune;charset=utf8');
 define('USER', 'root');
 define('PASSWORD', '');

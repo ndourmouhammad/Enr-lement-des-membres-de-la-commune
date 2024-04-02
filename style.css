@@ -1,39 +1,74 @@
 /* style.css */
 
-/* Réinitialisation des marges et des rembourrages */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-/* Styles de base pour le corps de la page */
 body {
   font-family: Arial, sans-serif;
-  background-color: #f0f0f0;
+  background-color: #f2f2f2;
+  margin: 0;
+  padding: 0;
 }
 
-/* Style du conteneur principal */
 .container {
-  max-width: 1000px;
+  width: 95%;
   margin: 0 auto;
   padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Style pour le titre */
 h1 {
-  font-size: 24px;
   text-align: center;
   margin-bottom: 20px;
-  color: #333;
+  font-size: 25px;
 }
 
-/* Style pour les liens */
-a {
-  color: #007bff;
+.Btn_add {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
   text-decoration: none;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.Btn_add img {
+  vertical-align: middle;
+  margin-right: 5px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table th,
+table td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+table th {
+  background-color: #f2f2f2;
+}
+
+table tr:hover {
+  background-color: #f9f9f9;
+}
+
+table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+table tr:nth-child(odd) {
+  background-color: #fff;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
 }
 
 a:hover {
-  text-decoration: underline;
+  color: #007bff;
 }
