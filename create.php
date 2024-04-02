@@ -33,10 +33,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="container">
         <h1>
         Enrôlement des membres de la commune de Patte d’Oie
-            PHP - POO - MySQL
+            (PHP - POO - MySQL)
         </h1>
-
+        
         <form action="" method="POST">
+      
         <label for="matricule">Matricule :</label>
     <input type="text" id="matricule" name="matricule" required><br><br>
     <label for="nom">Nom :</label>
@@ -70,7 +71,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <label for="statut">Statut :</label>
     <input type="text" id="statut" name="statut"><br><br>
 
+    <div class="confirm">
     <button type="submit">Enregistrer</button>
+    <button type="cancel"> <a href="index.php" > Annuler</a></button>
+    </div>
+   
 </form>
 
     </div>

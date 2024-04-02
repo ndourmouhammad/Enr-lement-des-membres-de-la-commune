@@ -136,4 +136,17 @@ class Membre implements Icrud
     {
         
     }
+    public function afficherDetails($matricule)
+    {
+        try {
+            $sql="SELECT * FROM membre WHERE matricule = :matricule";
+            $req=$this->cnx->prepare($sql);
+            $req->bindValue(':matricule', $matricule);
+            $req->execute();
+            $membres = $req->fetch(PDO::FETCH_ASSOC);
+            return $membres;
+         } catch (PDOException $erreur) {
+            die("Erreur !: " . $erreur->getMessage() . "<br/>");
+         }   
+    }
 }
