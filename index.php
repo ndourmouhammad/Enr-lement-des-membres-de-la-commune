@@ -16,7 +16,7 @@ require_once("config.php");
         Enrôlement des membres de la commune de Patte d’Oie
             PHP - POO - MySQL
         </h1>
-        <a href="ajouter.php" class="Btn_add"> <img src="images/plus.png"> Ajouter</a>
+        <a href="ajouter.php" class="Btn_add"> <img src="images/plus.svg"> Ajouter</a>
         
         <table>
             <tr matricule="items">
@@ -44,9 +44,9 @@ require_once("config.php");
                                 <td><?= $result['statut'] ?></td>
                                
                                 <!-- Nous allons mettre la matricule de chaque membre dans ce lien -->
-                                <td><a href="modifier.php?matricule=<?= $result['matricule'] ?>"><img src="images/pen.png"></a></td>
+                                <td><a href="modifier.php?matricule=<?= $result['matricule'] ?>"><img src="images/pen.svg"></a></td>
 
-                                <td><a href="supprimer.php?matricule=<?= $result['matricule'] ?>"><img src="images/trash.png"></a></td>
+                                <td><a href="supprimer.php?matricule=<?= $result['matricule'] ?>"><img src="images/trash.svg"></a></td>
                                 
                             </tr>
             <?php
