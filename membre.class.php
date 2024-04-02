@@ -95,9 +95,26 @@ class Membre implements Icrud
     }
  
     // Implementations des methodes de l'interface
-    public function create()
+    public function create($matricule, $nom, $prenom, $trancheAge, $sexe, $situationMatrimoniale, $statut)
     {
-        
+        try {
+            $sql = 'INSERT INTO membre (matricule, nom, prenom, trancheAge, sexe, situationMatrimoniale, statut) VALUES(:matricule, :nom, :prenom, :trancheAge, :sexe, :situationMatrimoniale, :statut)';
+            $req = $this->cnx->prepare($sql);
+            $req->bindValue(':matricule', $matricule);
+            $req->bindValue(':nom', $nom);
+            $req->bindValue(':prenom', $prenom);
+            $req->bindValue(':trancheAge', $trancheAge);
+            $req->bindValue(':sexe', $sexe);
+            $req->bindValue(':situationMatrimoniale', $situationMatrimoniale);
+            $req->bindValue(':statut', $statut);
+            $req->execute();
+
+            header("location: index.php");
+            exit();
+            
+        } catch (PDOException $erreur) {
+            die("Erreur !: " . $erreur->getMessage() . "<br/>");
+        }
     }
     public function read()
     {

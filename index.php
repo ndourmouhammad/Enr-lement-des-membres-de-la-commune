@@ -16,7 +16,7 @@ require_once("config.php");
         Enrôlement des membres de la commune de Patte d’Oie
             PHP - POO - MySQL
         </h1>
-        <a href="ajouter.php" class="Btn_add"> <img src="images/plus.svg"> Ajouter</a>
+        <a href="create.php" class="Btn_add"> <img src="images/plus.svg"> Ajouter</a>
         
         <table>
             <tr matricule="items">
