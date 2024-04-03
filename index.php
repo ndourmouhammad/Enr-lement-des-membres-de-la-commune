@@ -43,7 +43,7 @@ require_once("config.php");
 
 
                     <!-- Nous allons mettre la matricule de chaque membre dans ce lien -->
-                    <td><a href="modifier.php?matricule=<?= $result['matricule'] ?>"><img src="images/pen.svg"></a></td>
+                    <td><a href="update.php?matricule=<?= $result['matricule'] ?>"><img src="images/pen.svg"></a></td>
                     <td><a href="read.php?matricule=<?= $result['matricule'] ?>"><img src="images/detail.svg"></a></td>
                     <td><a href="supprimer.php?matricule=<?= $result['matricule'] ?>"><img src="images/trash.svg"></a></td>
 

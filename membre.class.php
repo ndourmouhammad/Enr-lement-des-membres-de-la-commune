@@ -128,8 +128,22 @@ class Membre implements Icrud
         die("Erreur !: " . $erreur->getMessage() . "<br/>");
      }   
     }
-    public function update()
+    public function update($matricule, $nom, $prenom, $trancheAge, $sexe, $situationMatrimoniale, $statut)
     {
+        $sql = "UPDATE membre SET nom = :nom, prenom = :prenom, trancheAge = :trancheAge, sexe = :sexe, situationMatrimoniale = :situationMatrimoniale, statut = :statut WHERE matricule = :matricule";
+
+        $req = $this->cnx->prepare($sql);
+        $req->bindValue(':matricule', $matricule);
+        $req->bindValue(':nom', $nom);
+        $req->bindValue(':prenom', $prenom);
+        $req->bindValue(':trancheAge', $trancheAge);
+        $req->bindValue(':sexe', $sexe);
+        $req->bindValue(':situationMatrimoniale', $situationMatrimoniale);
+        $req->bindValue(':statut', $statut);
+        $req->execute();
+
+        header("location: index.php");
+        exit();
         
     }
     public function delete()
