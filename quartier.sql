@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost
--- Généré le : mar. 02 avr. 2024 à 12:48
+-- Généré le : mer. 03 avr. 2024 à 18:42
 -- Version du serveur : 10.4.32-MariaDB
 -- Version de PHP : 8.2.12
 
@@ -24,36 +24,51 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Structure de la table `membre`
+-- Structure de la table `quartier`
 --
 
-CREATE TABLE `membre` (
-  `matricule` varchar(15) NOT NULL,
-  `nom` varchar(50) NOT NULL,
-  `prenom` varchar(50) NOT NULL,
-  `trancheAge` enum('Enfant','Jeune adulte','Adulte','Personne âgée') NOT NULL,
-  `sexe` enum('M','F') NOT NULL,
-  `situationMatrimoniale` enum('Célibataire','Marié(e)','Divorcé(e)','Veuf/Veuve') NOT NULL,
-  `statut` varchar(50) NOT NULL
+CREATE TABLE `quartier` (
+  `id` int(11) NOT NULL,
+  `libelle_q` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `membre`
+-- Déchargement des données de la table `quartier`
 --
 
-INSERT INTO `membre` (`matricule`, `nom`, `prenom`, `trancheAge`, `sexe`, `situationMatrimoniale`, `statut`) VALUES
-('MAT001', 'Ndour', 'Mouhammad ', 'Jeune adulte', 'M', 'Célibataire', 'Civile'),
-('MAT002', 'Niang', 'Mame Bassine', 'Jeune adulte', 'F', 'Célibataire', 'Civile');
+INSERT INTO `quartier` (`id`, `libelle_q`) VALUES
+(1, 'cité Keur Damel'),
+(2, 'cité Keur Gorgui'),
+(3, 'cité Mixta'),
+(4, 'Résidence de la Paix'),
+(5, 'Village Grand Médine'),
+(6, 'cité de la Patte d\'Oie'),
+(7, 'cité des Impôts et de Domaines'),
+(8, ' Patte d\'oie Builders'),
+(9, 'cité Al Amal'),
+(10, 'cité Bceao'),
+(11, 'cité Soprim'),
+(12, 'cité Soprim-Extension');
 
 --
 -- Index pour les tables déchargées
 --
 
 --
--- Index pour la table `membre`
+-- Index pour la table `quartier`
 --
-ALTER TABLE `membre`
-  ADD PRIMARY KEY (`matricule`);
+ALTER TABLE `quartier`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT pour les tables déchargées
+--
+
+--
+-- AUTO_INCREMENT pour la table `quartier`
+--
+ALTER TABLE `quartier`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

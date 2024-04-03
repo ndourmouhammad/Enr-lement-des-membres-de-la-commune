@@ -79,7 +79,7 @@ form {
     border-radius: 5px;
 }
 
-label {
+label, option {
     display: block;
     margin-bottom: 5px;
 }

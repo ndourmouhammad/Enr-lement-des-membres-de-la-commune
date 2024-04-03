@@ -32,6 +32,7 @@ $results = $membre->afficherDetails($matricule);
                 <th>Sexe</th>
                 <th>Situation matrimoniale</th>
                 <th>Statut</th>
+                <th>Quartier</th>
             </tr>
             <?php 
                         
@@ -40,10 +41,11 @@ $results = $membre->afficherDetails($matricule);
                                 <td><?= $results['matricule'] ?></td>
                                 <td><?= $results['prenom'] ?></td>
                                 <td><?= $results['nom'] ?></td>
-                                <td><?= $results['trancheAge'] ?></td>
+                                <td><?= $results['tranche'] ?></td>
                                 <td><?= $results['sexe'] ?></td>
                                 <td><?= $results['situationMatrimoniale'] ?></td>
-                                <td><?= $results['statut'] ?></td>            
+                                <td><?= $results['libelle'] ?></td> 
+                                <td><?= $results['libelle_q'] ?></td>            
                             </tr>
             <?php
                         

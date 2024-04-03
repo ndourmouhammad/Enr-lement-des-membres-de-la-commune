@@ -10,23 +10,25 @@ class Membre implements Icrud
     private $matricule;
     private $nom;
     private $prenom;
-    private $trancheAge;
+    private $id_trancheAge;
     private $sexe;
     private $situationMatrimoniale;
-    private $statut;
+    private $id_statut;
+    private $id_quartier;
     private $cnx;
 
 
     // la méthode magique __construct
-    public function __construct($matricule, $nom, $prenom, $trancheAge, $sexe, $situationMatrimoniale, $statut, $cnx)
+    public function __construct($matricule, $nom, $prenom, $id_trancheAge, $sexe, $situationMatrimoniale, $id_statut, $id_quartier, $cnx)
     {
         $this->matricule = $matricule;
         $this->nom = $nom;
         $this->prenom = $prenom;
-        $this->trancheAge = $trancheAge;
+        $this->id_trancheAge = $id_trancheAge;
         $this->sexe = $sexe;
         $this->situationMatrimoniale = $situationMatrimoniale;
-        $this->statut = $statut;
+        $this->id_statut = $id_statut;
+        $this->id_quartier = $id_quartier;
         $this->cnx = $cnx;
     }
 
@@ -60,11 +62,11 @@ class Membre implements Icrud
 
     public function getTrancheAge()
     {
-        return $this->trancheAge;
+        return $this->id_trancheAge;
     }
     public function setTrancheAge($n_trancheAge)
     {
-        $this->trancheAge = $n_trancheAge;
+        $this->id_trancheAge = $n_trancheAge;
     }
 
     public function getSexe()
@@ -87,34 +89,55 @@ class Membre implements Icrud
 
     public function getStatut()
     {
-        return $this->statut;
+        return $this->id_statut;
     }
     public function setStatut($n_statut)
     {
-        $this->statut = $n_statut;
+        $this->id_statut = $n_statut;
+    }
+
+    public function getQuartier()
+    {
+        return $this->id_quartier;
+    }
+    public function setQuartier($n_quartier)
+    {
+        $this->id_quartier = $n_quartier;
     }
 
     // Implementations des methodes de l'interface
-    public function create($matricule, $nom, $prenom, $trancheAge, $sexe, $situationMatrimoniale, $statut)
+    public function create($nom, $prenom, $id_trancheAge, $sexe, $situationMatrimoniale, $id_statut, $id_quartier)
     {
         try {
-            $sql = 'INSERT INTO membre (matricule, nom, prenom, trancheAge, sexe, situationMatrimoniale, statut) VALUES(:matricule, :nom, :prenom, :trancheAge, :sexe, :situationMatrimoniale, :statut)';
-            $req = $this->cnx->prepare($sql);
-            $req->bindValue(':matricule', $matricule);
-            $req->bindValue(':nom', $nom);
-            $req->bindValue(':prenom', $prenom);
-            $req->bindValue(':trancheAge', $trancheAge);
-            $req->bindValue(':sexe', $sexe);
-            $req->bindValue(':situationMatrimoniale', $situationMatrimoniale);
-            $req->bindValue(':statut', $statut);
-            $req->execute();
-
+            // Insérer le nouveau membre sans spécifier le matricule
+            $sql_insert = 'INSERT INTO membre (nom, prenom, id_trancheAge, sexe, situationMatrimoniale, id_statut, id_quartier) VALUES(:nom, :prenom, :trancheAge, :sexe, :situationMatrimoniale, :statut, :quartier)';
+            $req_insert = $this->cnx->prepare($sql_insert);
+            $req_insert->bindValue(':nom', $nom);
+            $req_insert->bindValue(':prenom', $prenom);
+            $req_insert->bindValue(':trancheAge', $id_trancheAge, PDO::PARAM_INT);
+            $req_insert->bindValue(':sexe', $sexe);
+            $req_insert->bindValue(':situationMatrimoniale', $situationMatrimoniale);
+            $req_insert->bindValue(':statut', $id_statut, PDO::PARAM_INT);
+            $req_insert->bindValue(':quartier', $id_quartier, PDO::PARAM_INT);
+            $req_insert->execute();
+    
+            // Récupérer l'ID auto-incrémenté généré
+            $matricule = $this->cnx->lastInsertId();
+    
+            // Mise à jour du matricule dans la base de données
+            $sql_update = 'UPDATE membre SET matricule = :matricule WHERE id = :id';
+            $req_update = $this->cnx->prepare($sql_update);
+            $req_update->bindValue(':matricule', "PO_" . $matricule);
+            $req_update->bindValue(':id', $matricule);
+            $req_update->execute();
+    
             header("location: index.php");
             exit();
         } catch (PDOException $erreur) {
             die("Erreur !: " . $erreur->getMessage() . "<br/>");
         }
     }
+    
     public function read()
     {
         try {
@@ -154,7 +177,9 @@ class Membre implements Icrud
             $sql= "DELETE FROM  membre WHERE matricule =:matricule ";
             $req = $this->cnx->prepare($sql);
             $req->bindValue(':matricule', $matricule);
+            var_dump($req->execute());
             $req->execute();
+            
             header("location: index.php");
             exit();
 
@@ -165,7 +190,7 @@ class Membre implements Icrud
     public function afficherDetails($matricule)
     {
         try {
-            $sql = "SELECT * FROM membre WHERE matricule = :matricule";
+            $sql = "SELECT * FROM membre JOIN quartier ON quartier.id = id_quartier JOIN statut ON statut.id = id_statut JOIN TrancheAge ON TrancheAge.id = id_trancheAge WHERE matricule = :matricule";
             $req = $this->cnx->prepare($sql);
             $req->bindValue(':matricule', $matricule);
             $req->execute();
