@@ -4,7 +4,7 @@ require_once("crud.interface.php");
 
 // classe Membre
 class Membre implements Icrud
-     
+
 {
     // les propriétés
     private $matricule;
@@ -75,7 +75,7 @@ class Membre implements Icrud
     {
         $this->sexe = $n_sexe;
     }
-    
+
     public function getSituationMatrimoniale()
     {
         return $this->situationMatrimoniale;
@@ -93,7 +93,7 @@ class Membre implements Icrud
     {
         $this->statut = $n_statut;
     }
- 
+
     // Implementations des methodes de l'interface
     public function create($matricule, $nom, $prenom, $trancheAge, $sexe, $situationMatrimoniale, $statut)
     {
@@ -111,56 +111,68 @@ class Membre implements Icrud
 
             header("location: index.php");
             exit();
-            
         } catch (PDOException $erreur) {
             die("Erreur !: " . $erreur->getMessage() . "<br/>");
         }
     }
     public function read()
     {
-     try {
-        $sql="SELECT * FROM membre";
-        $req=$this->cnx->prepare($sql);
-        $req->execute();
-        $membres = $req->fetchAll(PDO::FETCH_ASSOC);
-        return $membres;
-     } catch (PDOException $erreur) {
-        die("Erreur !: " . $erreur->getMessage() . "<br/>");
-     }   
+        try {
+            $sql = "SELECT * FROM membre";
+            $req = $this->cnx->prepare($sql);
+            $req->execute();
+            $membres = $req->fetchAll(PDO::FETCH_ASSOC);
+            return $membres;
+        } catch (PDOException $erreur) {
+            die("Erreur !: " . $erreur->getMessage() . "<br/>");
+        }
     }
     public function update($matricule, $nom, $prenom, $trancheAge, $sexe, $situationMatrimoniale, $statut)
     {
-        $sql = "UPDATE membre SET nom = :nom, prenom = :prenom, trancheAge = :trancheAge, sexe = :sexe, situationMatrimoniale = :situationMatrimoniale, statut = :statut WHERE matricule = :matricule";
+        try {
+            $sql = "UPDATE membre SET nom = :nom, prenom = :prenom, trancheAge = :trancheAge, sexe = :sexe, situationMatrimoniale = :situationMatrimoniale, statut = :statut WHERE matricule = :matricule";
 
-        $req = $this->cnx->prepare($sql);
-        $req->bindValue(':matricule', $matricule);
-        $req->bindValue(':nom', $nom);
-        $req->bindValue(':prenom', $prenom);
-        $req->bindValue(':trancheAge', $trancheAge);
-        $req->bindValue(':sexe', $sexe);
-        $req->bindValue(':situationMatrimoniale', $situationMatrimoniale);
-        $req->bindValue(':statut', $statut);
-        $req->execute();
+            $req = $this->cnx->prepare($sql);
+            $req->bindValue(':matricule', $matricule);
+            $req->bindValue(':nom', $nom);
+            $req->bindValue(':prenom', $prenom);
+            $req->bindValue(':trancheAge', $trancheAge);
+            $req->bindValue(':sexe', $sexe);
+            $req->bindValue(':situationMatrimoniale', $situationMatrimoniale);
+            $req->bindValue(':statut', $statut);
+            $req->execute();
 
-        header("location: index.php");
-        exit();
-        
+            header("location: index.php");
+            exit();
+        } catch (PDOException $erreur) {
+            die("Erreur !: " . $erreur->getMessage() . "<br/>");
+        }
     }
-    public function delete()
+    public function delete($matricule)
     {
-        
+        try {
+            $sql= "DELETE FROM  membre WHERE matricule =:matricule ";
+            $req = $this->cnx->prepare($sql);
+            $req->bindValue(':matricule', $matricule);
+            $req->execute();
+            header("location: index.php");
+            exit();
+
+        } catch (PDOException $erreur) {
+            die("Erreur !: " . $erreur->getMessage() . "<br/>");
+        }
     }
     public function afficherDetails($matricule)
     {
         try {
-            $sql="SELECT * FROM membre WHERE matricule = :matricule";
-            $req=$this->cnx->prepare($sql);
+            $sql = "SELECT * FROM membre WHERE matricule = :matricule";
+            $req = $this->cnx->prepare($sql);
             $req->bindValue(':matricule', $matricule);
             $req->execute();
             $membres = $req->fetch(PDO::FETCH_ASSOC);
             return $membres;
-         } catch (PDOException $erreur) {
+        } catch (PDOException $erreur) {
             die("Erreur !: " . $erreur->getMessage() . "<br/>");
-         }   
+        }
     }
 }
