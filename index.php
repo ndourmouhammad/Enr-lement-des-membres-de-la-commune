@@ -24,7 +24,7 @@ require_once("config.php");
 
         <table>
             <tr matricule="items">
-                <th>Matricule</th>
+               
                 <th>Prenom</th>
                 <th>Nom</th>
                 <th>Modifier</th>
@@ -37,7 +37,7 @@ require_once("config.php");
             foreach ($results as $result) {
             ?>
                 <tr>
-                    <td><?= $result['matricule'] ?></td>
+                    
                     <td><?= $result['prenom'] ?></td>
                     <td><?= $result['nom'] ?></td>
 
