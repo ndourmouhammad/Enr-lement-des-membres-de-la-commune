@@ -150,19 +150,20 @@ class Membre implements Icrud
             die("Erreur !: " . $erreur->getMessage() . "<br/>");
         }
     }
-    public function update($matricule, $nom, $prenom, $trancheAge, $sexe, $situationMatrimoniale, $statut)
+    public function update($matricule, $nom, $prenom, $id_trancheAge, $sexe, $situationMatrimoniale, $id_statut, $id_quartier)
     {
         try {
-            $sql = "UPDATE membre SET nom = :nom, prenom = :prenom, trancheAge = :trancheAge, sexe = :sexe, situationMatrimoniale = :situationMatrimoniale, statut = :statut WHERE matricule = :matricule";
+            $sql = "UPDATE membre SET nom = :nom, prenom = :prenom, id_trancheAge = :id_trancheAge, sexe = :sexe, situationMatrimoniale = :situationMatrimoniale, id_statut = :id_statut, id_quartier = :id_quartier WHERE matricule = :matricule";
 
             $req = $this->cnx->prepare($sql);
             $req->bindValue(':matricule', $matricule);
             $req->bindValue(':nom', $nom);
             $req->bindValue(':prenom', $prenom);
-            $req->bindValue(':trancheAge', $trancheAge);
+            $req->bindValue(':id_trancheAge', $id_trancheAge,PDO::PARAM_INT);
             $req->bindValue(':sexe', $sexe);
             $req->bindValue(':situationMatrimoniale', $situationMatrimoniale);
-            $req->bindValue(':statut', $statut);
+            $req->bindValue(':id_statut', $id_statut,PDO::PARAM_INT);
+            $req->bindValue(':id_quartier', $id_quartier,PDO::PARAM_INT);
             $req->execute();
 
             header("location: index.php");
