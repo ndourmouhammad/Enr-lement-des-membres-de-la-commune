@@ -1,11 +1,13 @@
 <?php
 require_once("crud.interface.php");
-
+require_once('validation.trait.php');
 
 // classe Membre
 class Membre implements Icrud
 
 {
+    use ValidationTrait;
+
     // les propriétés
     private $matricule;
     private $nom;

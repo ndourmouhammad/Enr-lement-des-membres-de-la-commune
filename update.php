@@ -12,10 +12,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id_statut = htmlspecialchars($_POST['statut']);
     $id_quartier = htmlspecialchars($_POST['quartier']);
 
-    if ($nom != "" && $prenom != "" && $id_trancheAge != "" && $sexe != "" && $situationMatrimoniale != "" && $id_statut != "" && $id_quartier != "") {
+    if ($membre->validateNom($nom) && $membre->validatePrenom($prenom)) {
         $membre->update($matricule, $nom, $prenom, $id_trancheAge, $sexe, $situationMatrimoniale, $id_statut, $id_quartier);
+    } else {
+        echo "Veuillez revoir les champs nom ou prenom.";
     }
 }
+
 $sql = "SELECT * FROM membre WHERE matricule = :matricule";
 $req = $cnx->prepare($sql);
 $req->bindValue(':matricule', $matricule);
@@ -51,29 +54,29 @@ $membres = $req->fetch(PDO::FETCH_OBJ);
             <select name="trancheAge" id="trancheAge" required>
                 <option value="">Choisis ta tranche d'âge</option>
                 <?php foreach ($ages as $age) : ?>
-                    <option value="<?php echo $age->id; ?>"><?php echo $age->tranche; ?></option>
+                    <option value="<?php echo $age->id; ?>" <?php if($age->id == $membres->id_trancheAge) echo 'selected="selected"'; ?>><?php echo $age->tranche; ?></option>
                 <?php endforeach; ?>
             </select><br><br>
 
             <label for="sexe">Sexe :</label>
             <select id="sexe" name="sexe">
-                <option value="M">Masculin</option>
-                <option value="F">Féminin</option>
+                <option value="M" <?php if($membres->sexe == 'M') echo 'selected="selected"'; ?>>Masculin</option>
+                <option value="F" <?php if($membres->sexe == 'F') echo 'selected="selected"'; ?>>Féminin</option>
             </select><br><br>
 
             <label for="situationMatrimoniale">Situation matrimoniale :</label>
             <select id="situationMatrimoniale" name="situationMatrimoniale">
-                <option value="Célibataire">Célibataire</option>
-                <option value="Marié(e)">Marié(e)</option>
-                <option value="Divorcé(e)">Divorcé(e)</option>
-                <option value="Veuf/Veuve">Veuf/Veuve</option>
+                <option value="Célibataire" <?php if($membres->situationMatrimoniale == 'Célibataire') echo 'selected="selected"'; ?>>Célibataire</option>
+                <option value="Marié(e)" <?php if($membres->situationMatrimoniale == 'Marié(e)') echo 'selected="selected"'; ?>>Marié(e)</option>
+                <option value="Divorcé(e)" <?php if($membres->situationMatrimoniale == 'Divorcé(e)') echo 'selected="selected"'; ?>>Divorcé(e)</option>
+                <option value="Veuf/Veuve" <?php if($membres->situationMatrimoniale == 'Veuf/Veuve') echo 'selected="selected"'; ?>>Veuf/Veuve</option>
             </select><br><br>
 
             <label for="statut">Statut</label>
             <select name="statut" id="statut" required>
                 <option value="">Choisis un statut</option>
                 <?php foreach ($statuts as $statut) : ?>
-                    <option value="<?php echo $statut->id; ?>"><?php echo $statut->libelle; ?></option>
+                    <option value="<?php echo $statut->id; ?>" <?php if($statut->id == $membres->id_statut) echo 'selected="selected"'; ?>><?php echo $statut->libelle; ?></option>
                 <?php endforeach; ?>
             </select><br><br>
 
@@ -81,7 +84,7 @@ $membres = $req->fetch(PDO::FETCH_OBJ);
             <select name="quartier" id="quartier" required>
                 <option value="">Choisis un quartier</option>
                 <?php foreach ($quartiers as $quartier) : ?>
-                    <option value="<?php echo $quartier->id; ?>"><?php echo $quartier->libelle_q; ?></option>
+                    <option value="<?php echo $quartier->id; ?>" <?php if($quartier->id == $membres->id_quartier) echo 'selected="selected"'; ?>><?php echo $quartier->libelle_q; ?></option>
                 <?php endforeach; ?>
             </select><br><br>
 

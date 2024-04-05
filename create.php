@@ -1,6 +1,9 @@
 <?php
 require_once("config.php");
 
+
+
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Récupérer les valeurs soumises par le formulaire
     $nom = htmlspecialchars($_POST['nom']);
@@ -12,7 +15,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id_quartier = htmlspecialchars($_POST['quartier']);
 
     if ($nom != "" && $prenom != "" && $id_trancheAge != "" && $sexe != "" && $situationMatrimoniale != "" && $id_statut != "" && $id_quartier != "") {
-        $membre->create($nom, $prenom, $id_trancheAge, $sexe, $situationMatrimoniale, $id_statut, $id_quartier);
+        if ($membre->validateNom($nom) && $membre->validatePrenom($prenom)) {
+            $membre->create($nom, $prenom, $id_trancheAge, $sexe, $situationMatrimoniale, $id_statut, $id_quartier);
+        } else {
+
+            echo "Veuillez revoir les champs nom ou prenom.";
+        }
     }
 }
 ?>
